@@ -1,5 +1,5 @@
 #include<iostream>
-#include"ll.cpp"
+#include"ll.hpp"
 
 int main(int argc, char const *argv[])
 {
