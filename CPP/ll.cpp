@@ -1,4 +1,5 @@
-#include<iostream>
+#define BEG beg
+#define END end
 
 struct node
 {
@@ -12,7 +13,7 @@ class List
     unsigned int count;
     public:
         List(){start=NULL; count=0;}
-        void insert(int a)
+        void insert(int a,int index = 0)
         {
             node *temp;
             temp = new node;
@@ -21,18 +22,19 @@ class List
             start = temp;
             count++;
         }
-        node * end()
+        void insertRange(List l,int index = 0)   //will insert one list into another list
         {
-            node *loc=start;
-            while(loc->next!=NULL){loc=loc->next;}
-            return loc;
-        }
-        int getCount(){return count;}
-        void insertRange(List l)   //will add an array of data at once
-        {
-            l.end()->next=this->start;
-            start = l.start;
-            this->count = l.count + this->count;
+            if (index = 0)
+            {
+                l.end()->next=this->start;
+                start = l.start;
+                this->count = l.count + this->count;
+            }
+            else
+            {
+                end()->next=l.start;
+                this->count = l.count + this->count;
+            }
         } 
         void show()
         {
@@ -45,20 +47,12 @@ class List
             }
         }
         ~List(){}
+        int getCount(){return count;}
+        node * end()
+        {
+            node *loc=start;
+            while(loc->next!=NULL){loc=loc->next;}
+            return loc;
+        }
+
 };
-
-int main(int argc, char const *argv[])
-{
-    List one,two;
-    //one.insert(1);
-    //one.insert(2);
-    for(int i =0; i<1000;i++)
-    {one.insert(i);}
-    for(int i =0; i<10;i++)
-    {two.insert(i*11);}
-    one.insertRange(two);
-
-    one.show();
-
-    std::cout<<"/n"<<one.getCount();
-}
