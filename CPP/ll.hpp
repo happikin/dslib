@@ -14,13 +14,13 @@ class List
     uint count;
     public:
         List(){start=NULL; count=0;}
-        node* gotoEnd()
+        node * gotoEnd()
         {
             node * loc=start;
             while(loc->next!=NULL){loc=loc->next;}
             return loc;
         }
-        node* goTo(int index)
+        node * goTo(int index)
         {
             index-=2;
             node* loc=start;
@@ -101,6 +101,29 @@ class List
                 lptr->next = sptr->next;
                 sptr->next=l.start;
                 count += l.count;
+            }
+        }
+        node* findItem(uint item)   //wil return pointer to the node preceding the target node
+        {
+            node * loc = start;
+            while(loc->next->data!=item)
+            {loc=loc->next;}
+            return loc;
+        }
+        void remove(uint item)
+        {
+            if(start->data==item)
+            {
+                node *ptr = start;
+                start=start->next;
+                delete ptr;
+            }
+            else
+            {
+                node * ptr,* loc = findItem(item);
+                ptr=loc->next;
+                loc->next=ptr->next;
+                delete ptr;
             }
         }
         void show()
