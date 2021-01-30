@@ -20,7 +20,7 @@ class List
             while(loc->next!=NULL){loc=loc->next;}
             return loc;
         }
-        node * goTo(int index)
+        node * goTo(uint index)
         {
             index-=2;
             node* loc=start;
@@ -36,7 +36,7 @@ class List
             return loc;
         }
         uint getCount(){return count;}
-        void insert(int a,int index = 0)
+        void insert(int a,uint index = 0)
         {
             node *temp,*loc;
             temp = new node;
@@ -56,7 +56,7 @@ class List
             }
             count++;
         }
-        void insertAt(int value,int index)
+        void insertAt(int value,uint index)
         {
             if(index>count+1 || index<0)
             {std::cout<<"EXEPTION : IndexOutOfRange \n";}
@@ -70,18 +70,19 @@ class List
                 count++;
             }
         }
-        void insertRange(List l,int index = 0)   //will insert one list into another list
+        void insertRange(List &l,uint index = 0)   //will insert one list into another list
         {
             if (index == 0)
             {
-                l.end()->next=this->start;
+                node *ptr=l.end();
+                ptr->next=start;
                 start = l.start;
-                this->count = l.count + this->count;
+                count = l.count + count;
             }
             else if (index == 1)
             {
                 end()->next=l.start;
-                this->count = l.count + this->count;
+                count = l.count + count;
             }
             else
             {
@@ -89,7 +90,7 @@ class List
             }
             
         } 
-        void insertRangeAt(List l,int index)
+        void insertRangeAt(List &l,uint index)
         {
             if(index>count+1 || index<0)
             {std::cout<<"EXEPTION : IndexOutOfRange \n";}
@@ -103,7 +104,7 @@ class List
                 count += l.count;
             }
         }
-        node* findItem(uint item)   //wil return pointer to the node preceding the target node
+        node* findItem(int item)   //wil return pointer to the node preceding the target node
         {
             node * loc = start;
             while(loc->next->data!=item)
@@ -117,7 +118,7 @@ class List
             }
             return loc;
         }
-        void remove(uint item)
+        void remove(int item)
         {
             if(start->data==item && start!=NULL)
             {
@@ -138,7 +139,7 @@ class List
                 }
             }
         }
-        void getridOf(uint item)
+        void getridOf(int item)
         {
             static node *sloc = start;
             if(sloc!=NULL)
@@ -149,6 +150,7 @@ class List
                     start=start->next;
                     sloc=start;
                     delete ptr;
+                    count--;
                     getridOf(item);
                 }
                 else
@@ -160,6 +162,7 @@ class List
                         loc->next=ptr->next;
                         sloc=loc;
                         delete ptr;
+                        count--;
                         getridOf(item);
                     }
                     else
@@ -167,15 +170,26 @@ class List
                 }
             }
             else
+            {return;}
+        }
+        void removeAt(uint index)
+        {
+            if(index>count+1 || index<0)
+            {std::cout<<"EXEPTION : IndexOutOfRange \n";}
+            else
             {
-                return;
+                node *ptr,* loc = goTo(index);
+                ptr=loc->next;
+                loc->next=ptr->next;
+                delete ptr;
+                count--;
             }
-            
         }
         void show()
         {
             node *loc;
             loc=start;
+            std::cout<<"List Data :: ";
             while (loc!=NULL)
             {
                 std::cout<<"["<<loc->data<<"]";
