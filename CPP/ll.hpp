@@ -107,24 +107,70 @@ class List
         {
             node * loc = start;
             while(loc->next->data!=item)
-            {loc=loc->next;}
+            {
+                loc=loc->next;
+                if(loc->next==NULL)
+                {
+                    return NULL;
+                    break;
+                }
+            }
             return loc;
         }
         void remove(uint item)
         {
-            if(start->data==item)
+            if(start->data==item && start!=NULL)
             {
                 node *ptr = start;
                 start=start->next;
                 delete ptr;
+                count--;
             }
             else
             {
                 node * ptr,* loc = findItem(item);
-                ptr=loc->next;
-                loc->next=ptr->next;
-                delete ptr;
+                if(loc!=NULL)
+                {
+                    ptr=loc->next;
+                    loc->next=ptr->next;
+                    delete ptr;
+                    count--;
+                }
             }
+        }
+        void getridOf(uint item)
+        {
+            static node *sloc = start;
+            if(sloc!=NULL)
+            {
+                if(start->data==item)
+                {
+                    node *ptr = start;
+                    start=start->next;
+                    sloc=start;
+                    delete ptr;
+                    getridOf(item);
+                }
+                else
+                {
+                    node * ptr,*loc = findItem(item);
+                    if(loc!=NULL)
+                    {
+                        ptr=loc->next;
+                        loc->next=ptr->next;
+                        sloc=loc;
+                        delete ptr;
+                        getridOf(item);
+                    }
+                    else
+                    {return;}   
+                }
+            }
+            else
+            {
+                return;
+            }
+            
         }
         void show()
         {

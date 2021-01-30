@@ -23,5 +23,11 @@ int main()
     {
         std::cerr << e.what() << '\n';
     }
-    
+    std::cout<<"\n";
+    one.show();
+    one.remove(3201);
+    one.show();
+    one.getridOf(0);
+    one.getridOf(2);
+    one.show();
 }
