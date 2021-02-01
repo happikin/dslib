@@ -2,44 +2,50 @@
 #define BEG 0
 #define END 1
 typedef unsigned int uint;
+
+//----- cType is shorthand for custom type used in this generic DS library -----//
+
+template<class cType>
 struct node
 {
-    int data;
-    node * next;
+    cType data;
+    node<cType>* next;
 };
 
+template<class cType>
 class List
 {
-    node * start;
+    node<cType>* start;
     uint count;
     public:
         List(){start=NULL; count=0;}
-        node * gotoEnd()
+        node<cType>* gotoEnd()
         {
-            node * loc=start;
+            node<cType>* loc=start;
             while(loc->next!=NULL){loc=loc->next;}
             return loc;
         }
-        node * goTo(uint index)
+        node<cType>* goTo(uint index)
         {
             index-=2;
-            node* loc=start;
+            node<cType>* loc=start;
             uint i = 0;
             while(i < index)
             {loc=loc->next;i++;}
             return loc;
         }
-        node * end()
+        node<cType>* end()
         {
-            node *loc=start;
+            node<cType>*loc=start;
             while(loc->next!=NULL){loc=loc->next;}
             return loc;
         }
         uint getCount(){return count;}
-        void insert(int a,uint index = 0)
+        void insert(cType a,uint index = 0)
         {
-            node *temp,*loc;
-            temp = new node;
+            node<cType>*temp;
+            node<cType>*loc;
+            temp = new node<cType>;
             temp->data = a;
                         
             switch(index)
@@ -56,25 +62,25 @@ class List
             }
             count++;
         }
-        void insertAt(int value,uint index)
+        void insertAt(cType value,uint index)
         {
             if(index>count+1 || index<0)
             {std::cout<<"EXEPTION : IndexOutOfRange \n";}
             else
             {
-                node *temp,* loc = goTo(index);
-                temp = new node;
+                node<cType>*temp,*loc = goTo(index);   //split the pointer declaration into two lines if error is shown
+                temp = new node<cType>;
                 temp->data = value;
                 temp->next = loc->next;
                 loc->next = temp;
                 count++;
             }
         }
-        void insertRange(List &l,uint index = 0)   //will insert one list into another list
+        void insertRange(List<cType> &l,uint index = 0)   //will insert one list into another list
         {
             if (index == 0)
             {
-                node *ptr=l.end();
+                node<cType>*ptr=l.end();
                 ptr->next=start;
                 start = l.start;
                 count = l.count + count;
@@ -88,15 +94,14 @@ class List
             {
                 std::cout<<"INVALID POSITION CODE"<<std::endl;
             }
-            
         } 
-        void insertRangeAt(List &l,uint index)
+        void insertRangeAt(List<cType> &l,uint index)
         {
             if(index>count+1 || index<0)
             {std::cout<<"EXEPTION : IndexOutOfRange \n";}
             else
             {
-                node*lptr,*sptr;
+                node<cType>*lptr,*sptr;
                 lptr=l.gotoEnd();
                 sptr = this->goTo(index);
                 lptr->next = sptr->next;
@@ -104,9 +109,9 @@ class List
                 count += l.count;
             }
         }
-        node* findItem(int item)   //wil return pointer to the node preceding the target node
+        node<cType>*findItem(cType item)   //wil return pointer to the node preceding the target node
         {
-            node * loc = start;
+            node<cType>* loc = start;
             while(loc->next->data!=item)
             {
                 loc=loc->next;
@@ -118,18 +123,18 @@ class List
             }
             return loc;
         }
-        void remove(int item)
+        void remove(cType item)
         {
             if(start->data==item && start!=NULL)
             {
-                node *ptr = start;
+                node<cType>*ptr = start;
                 start=start->next;
                 delete ptr;
                 count--;
             }
             else
             {
-                node * ptr,* loc = findItem(item);
+                node<cType>*ptr,*loc = findItem(item);
                 if(loc!=NULL)
                 {
                     ptr=loc->next;
@@ -139,14 +144,14 @@ class List
                 }
             }
         }
-        void getridOf(int item)
+        void getridOf(cType item)
         {
-            static node *sloc = start;
+            static node<cType>*sloc = start;
             if(sloc!=NULL)
             {
                 if(start->data==item)
                 {
-                    node *ptr = start;
+                    node<cType>*ptr = start;
                     start=start->next;
                     sloc=start;
                     delete ptr;
@@ -155,7 +160,7 @@ class List
                 }
                 else
                 {
-                    node * ptr,*loc = findItem(item);
+                    node<cType>*ptr,*loc = findItem(item);
                     if(loc!=NULL)
                     {
                         ptr=loc->next;
@@ -178,7 +183,7 @@ class List
             {std::cout<<"EXEPTION : IndexOutOfRange \n";}
             else
             {
-                node *ptr,* loc = goTo(index);
+                node<cType>*ptr,*loc = goTo(index);
                 ptr=loc->next;
                 loc->next=ptr->next;
                 delete ptr;
@@ -187,7 +192,7 @@ class List
         }
         void show()
         {
-            node *loc;
+            node<cType>*loc;
             loc=start;
             std::cout<<"List Data :: ";
             while (loc!=NULL)
