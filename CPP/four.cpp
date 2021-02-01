@@ -20,11 +20,16 @@ int main()
     L2.show();
 
     List<string> L3;
-    L3.insert("yashesvi");
     L3.insert("ajay");
     L3.insert("arshi");
     L3.insert("chiterlekha");
+    L3.insert("yashesvi");
     L3.show();
 
-    
+    L1.remove(34);
+    L1.show();
+    L2.remove('a');
+    L2.show();
+    L3.remove("yashesvi");
+    L3.show();
 }
