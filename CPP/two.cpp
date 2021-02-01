@@ -17,17 +17,10 @@ int main()
     {three.insert(i-1);}
     one.show();
     std::cout<<one.getCount()<<std::endl;
-    try
-    {
-        two.insertRange(one); //2
-        two.show();
-        two.insertRangeAt(three,6);
-        one.show();
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
+    two.insertRange(one); //2
+    two.show();
+    two.insertRangeAt(three,6);
+    one.show();
     std::cout<<"\n";
     std::cout<<one.getCount()<<std::endl;
     one.remove(3201);

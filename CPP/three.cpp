@@ -5,8 +5,12 @@ using namespace std;
 
 int main()
 {
-    List one,two;
+    List one,two,three;
     uint v;
+    for(int i =0;i<5;i++)
+    {
+        three.insert(i*4);
+    }
     for(int i = 0;i<10;i++)
     {
         //cin>>v;
@@ -25,7 +29,10 @@ int main()
     one.insertRange(two);
     one.show();
     cout<<one.getCount()<<endl;
-    one.insertRangeAt(two,2);
+    one.insertRangeAt(three,2);
     one.show();
     cout<<one.getCount()<<endl;
+    three.getridOf(0);
+    three.show();
+    cout<<three.getCount()<<endl;
 }
