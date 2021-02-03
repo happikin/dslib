@@ -34,12 +34,12 @@ class List
             {loc=loc->next;i++;}
             return loc;
         }
-        node<cType>* end()
+        /*node<cType>* end()
         {
             node<cType>*loc=start;
             while(loc->next!=NULL){loc=loc->next;}
             return loc;
-        }
+        }*/
         uint getCount(){return count;}
         void insert(cType a,uint index = 0)
         {
@@ -76,18 +76,19 @@ class List
                 count++;
             }
         }
-        void insertRange(List<cType> &l,uint index = 0)   //will insert one list into another list
+        void insertRange(List<cType> l,uint index = 0)   //will insert one list into another list
         {
             if (index == 0)
             {
-                node<cType>*ptr=l.end();
+                node<cType>*ptr=l.goToEnd();
                 ptr->next=start;
                 start = l.start;
                 count = l.count + count;
             }
             else if (index == 1)
             {
-                end()->next=l.start;
+                node<cType>*ptr=this->gotoEnd();
+                ptr->next=l.start;
                 count = l.count + count;
             }
             else
